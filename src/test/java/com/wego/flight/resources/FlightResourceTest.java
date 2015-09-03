@@ -29,19 +29,19 @@ public class FlightResourceTest {
 		assertResultSize("singapore", "tokyo", 4);
 		assertResultSize("singapore", "tokyo", 4);
 		assertResultSize("Singapore", "malaysia", 1);
-	}
+	}	
 	
 	@Test
 	public void testSearchFlightWithEmptyResult(){
 		setupFlightDatabase();
-		String exptected = "<error>No airline operating between desired locations</error>";
+		String exptected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><root><error>No airline operating between desired locations</error></root>";
 		assertResultString("Singapore", "Indonesia", exptected);
 	}
 	
 	@Test
 	public void testSearchResultRepesentation(){
 		setupFlightDatabase();
-		String exptected = "<root><airlines>Malaysian Airline</airlines></root>";
+		String exptected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><root><airlines>Malaysian Airline</airlines></root>";
 		assertResultString("Singapore", "Malaysia", exptected);
 	}
 	
@@ -64,6 +64,6 @@ public class FlightResourceTest {
 	private void setupFlightDatabase(){
 		FlightDatabase database = FlightDatabase.getInstance();
 		String flightDatTaCsvFilePath = ResourceHelpers.resourceFilePath("com/wego/flight/flight_data.csv");
-		database.loadDataFromCsvFile(flightDatTaCsvFilePath);
+		database.loadDataFromCsvFile(flightDatTaCsvFilePath, FlightDatabase.CSV_LOAD_LOCAL_TYPE);
 	}
 }

@@ -1,11 +1,18 @@
 package com.wego.flight.models;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name="root")
 public class FlightQuery {
 
 	private String from;
 	
 	private String to;
 
+	public FlightQuery(){
+		
+	}
+	
 	public FlightQuery(String from, String to) {
 		super();
 		this.from = from;
