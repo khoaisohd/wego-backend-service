@@ -1,12 +1,12 @@
-package com.wego.airline.resources;
+package com.wego.flight.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-@Path("/airlines")
-public class AirlineResource{
+@Path("/flights")
+public class FlightResource{
 
 	@GET
 	@Path("/say-hello")

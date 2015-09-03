@@ -1,4 +1,4 @@
-package com.wego.airline;
+package com.wego.flight;
 
 import io.dropwizard.Configuration;
 

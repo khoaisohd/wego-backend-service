@@ -1,12 +1,12 @@
-package com.wego.airline.models;
+package com.wego.flight.models;
 
-public class AirlineQuery {
+public class FlightQuery {
 
 	private String from;
 	
 	private String to;
 
-	public AirlineQuery(String from, String to) {
+	public FlightQuery(String from, String to) {
 		super();
 		this.from = from;
 		this.to = to;

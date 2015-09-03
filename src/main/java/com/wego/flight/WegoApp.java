@@ -1,7 +1,7 @@
-package com.wego.airline;
+package com.wego.flight;
 
 
-import com.wego.airline.resources.AirlineResource;
+import com.wego.flight.resources.FlightResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
@@ -14,7 +14,7 @@ public class WegoApp extends Application<WegoConfig> {
 
     @Override
     public void run(WegoConfig configuration, Environment environment) {
-    	environment.jersey().register(new AirlineResource());
+    	environment.jersey().register(new FlightResource());
     }
 
 }
