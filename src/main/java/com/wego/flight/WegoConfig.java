@@ -15,7 +15,7 @@ public class WegoConfig extends Configuration {
 	
 	@NotEmpty
     private String flightDataCsvFileType;
-
+	
 	@JsonProperty
 	public String getFlightDataCsvFilePath() {
 		return flightDataCsvFilePath;

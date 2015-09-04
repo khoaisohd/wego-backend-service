@@ -2,6 +2,8 @@ package com.wego.flight.health;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.wego.common.FileWrapper;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class FlightDatabaseInitializeHealthCheck extends HealthCheck{
 
@@ -12,23 +14,20 @@ public class FlightDatabaseInitializeHealthCheck extends HealthCheck{
 		this.file = file;
 	}
 
-
 	@Override
 	protected Result check() throws Exception {
-		if (file == null){
+		BufferedReader reader = null;
+		try {
+			if(file != null) reader = file.read();
+		} catch (IOException ex){	
+		}
+		
+		if (reader == null){
 			return Result.unhealthy("Flight Data CSV file is not available");
-		}
-		String filePath = file.getPath();
-		String fileType = file.getType();
-		
-		if(filePath == null || filePath.trim().isEmpty()){
-			return Result.unhealthy("Flight Data CSV file path is not available");
+		} else {
+			return Result.healthy();
 		}
 		
-		if (fileType != FileWrapper.LOCAL && fileType != FileWrapper.REMOTE){
-			return Result.unhealthy("Flight Data CSV file type is not available");
-		}
-		return Result.healthy();
 	}
 	
 	
