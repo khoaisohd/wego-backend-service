@@ -1,6 +1,7 @@
 package com.wego.flight;
 
 
+import com.wego.flight.exceptions.FlightNotFoundExceptionMapper;
 import com.wego.flight.resources.FlightResource;
 
 import io.dropwizard.Application;
@@ -15,6 +16,7 @@ public class WegoApp extends Application<WegoConfig> {
     @Override
     public void run(WegoConfig configuration, Environment environment) {
     	environment.jersey().register(new FlightResource());
+    	environment.jersey().register(new FlightNotFoundExceptionMapper());
     }
 
 }

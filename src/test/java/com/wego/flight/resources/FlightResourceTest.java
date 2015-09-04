@@ -2,11 +2,13 @@ package com.wego.flight.resources;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import com.wego.flight.databases.FlightDatabase;
+import com.wego.flight.exceptions.FlightNotFoundExceptionMapper;
 import com.wego.flight.models.FlightList;
 import com.wego.flight.models.FlightQuery;
 
@@ -19,6 +21,7 @@ public class FlightResourceTest {
 	@ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
             .addResource(new FlightResource())
+            .addProvider(new FlightNotFoundExceptionMapper())
             .build();
 	
 	@Test
@@ -34,7 +37,7 @@ public class FlightResourceTest {
 	@Test
 	public void testSearchFlightWithEmptyResult(){
 		setupFlightDatabase();
-		String exptected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><root><error>No airline operating between desired locations</error></root>";
+		String exptected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><error>No airline operating between desired locations</error>";
 		assertResultString("Singapore", "Indonesia", exptected);
 	}
 	
@@ -55,10 +58,11 @@ public class FlightResourceTest {
 	
 	private void assertResultString(String from, String to, String expected){
 		FlightQuery query = new FlightQuery(from, to);
-		String result = resources.client().target("/flights/search")
+		Response response = resources.client().target("/flights/search")
 				.request(MediaType.APPLICATION_XML_TYPE)
-				.post(Entity.entity(query, MediaType.APPLICATION_XML_TYPE), String.class);
-		assertThat(result).isEqualTo(expected);
+				.post(Entity.entity(query, MediaType.APPLICATION_XML_TYPE));
+		String body = response.readEntity(String.class);
+		assertThat(body).isEqualTo(expected);
 	}
 	
 	private void setupFlightDatabase(){
