@@ -11,10 +11,10 @@ public class WegoConfig extends Configuration {
 	static String FLIGHT_DATA_CSV_REMOTE_TYPE = "remote";
 	
 	@NotEmpty
-    private String flightDataCsvFilePath;
+	private String flightDataCsvFilePath;
 	
 	@NotEmpty
-    private String flightDataCsvFileType;
+	private String flightDataCsvFileType;
 	
 	@JsonProperty
 	public String getFlightDataCsvFilePath() {
