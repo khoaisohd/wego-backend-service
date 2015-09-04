@@ -29,7 +29,7 @@ public class WegoApp extends Application<WegoConfig> {
     	environment.healthChecks().register("FlightDatabaseInitialize", 
     			new FlightDatabaseInitializeHealthCheck(file));
     	
-    	FlightDatabase flightDatabase= FlightDatabase.getInstance();
+    	FlightDatabase flightDatabase = FlightDatabase.getInstance();
     	flightDatabase.loadDataFromCsvFile(file);
     }
 

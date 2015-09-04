@@ -47,7 +47,7 @@ public class FlightDatabase {
 				String to = input.get(1).trim();
 				String airline = input.get(2).trim();
 				addFlight(new Flight(from, to, airline));
-				if(!from.equals(to)) addFlight(new Flight(to, from, airline));
+				if(!from.toLowerCase().equals(to.toLowerCase())) addFlight(new Flight(to, from, airline));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
