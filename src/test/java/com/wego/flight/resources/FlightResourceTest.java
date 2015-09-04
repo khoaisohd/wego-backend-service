@@ -38,6 +38,7 @@ public class FlightResourceTest {
 		assertResultSize("singapore", "tokyo", 4);
 		assertResultSize("singapore", "tokyo", 4);
 		assertResultSize("Singapore", "malaysia", 1);
+		assertResultSize("Singapore", "singapore", 1);
 	}	
 	
 	@Test
