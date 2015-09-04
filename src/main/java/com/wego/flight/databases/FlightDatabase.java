@@ -1,24 +1,18 @@
 package com.wego.flight.databases;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import com.wego.common.FileWrapper;
 
 import com.wego.flight.models.Flight;
 
 public class FlightDatabase {
 	private static FlightDatabase instance = null;
 	static final String  KEY_SEPARATOR = "-9890awst-";
-	public static int CSV_LOAD_LOCAL_TYPE = 0;
-	public static int CSV_LOAD_REMOTE_TYPE = 1;
 	
 	private HashMap<String, List<Flight>> map;
 	
@@ -38,16 +32,13 @@ public class FlightDatabase {
 		return map.get(key);
 	}
 	
-	public void loadDataFromCsvFile(String csvFilePath, int type){
+	public void loadDataFromCsvFile(FileWrapper file){
+		
 		map = new HashMap<String, List<Flight>>();
 		try {
-			BufferedReader bufferedReader;
-			if (type == FlightDatabase.CSV_LOAD_LOCAL_TYPE){
-				bufferedReader = new BufferedReader(new FileReader(csvFilePath));
-			} else {
-				URL fileUrl = new URL(csvFilePath);
-				bufferedReader = new BufferedReader(new InputStreamReader(fileUrl.openStream()));
-			}
+			if (file == null) return;
+			BufferedReader bufferedReader = file.read();
+			if (bufferedReader == null) return;
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
 				List<String> input = Arrays.asList(line.split(",")); 
@@ -58,14 +49,9 @@ public class FlightDatabase {
 				addFlight(new Flight(from, to, airline));
 				if(!from.equals(to)) addFlight(new Flight(to, from, airline));
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	private void addFlight(Flight flight){

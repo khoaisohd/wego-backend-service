@@ -1,4 +1,5 @@
-flightDataCsvFilePath: https://raw.githubusercontent.com/khoaisohd/wego-java-services/master/flight_data.csv
+
+flightDataCsvFilePath: https://raw.githubusercontent.com/khoaisohd/wego-java-services/master/flights.csv
 
 flightDataCsvFileType: remote
 

@@ -4,9 +4,11 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import com.wego.common.FileWrapper;
 import com.wego.flight.databases.FlightDatabase;
 import com.wego.flight.exceptions.FlightNotFoundExceptionMapper;
 import com.wego.flight.models.FlightList;
@@ -24,9 +26,13 @@ public class FlightResourceTest {
             .addProvider(new FlightNotFoundExceptionMapper())
             .build();
 	
+	@Before
+    public void setUp() throws Exception {
+		setupFlightDatabase();
+    }
+	
 	@Test
 	public void testSearchFlightWithNotEmptyResult(){
-		setupFlightDatabase();
 		assertResultSize("Tokyo", "Singapore", 4);
 		assertResultSize("Singapore", "Tokyo", 4);
 		assertResultSize("singapore", "tokyo", 4);
@@ -36,14 +42,12 @@ public class FlightResourceTest {
 	
 	@Test
 	public void testSearchFlightWithEmptyResult(){
-		setupFlightDatabase();
 		String exptected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><error>No airline operating between desired locations</error>";
 		assertResultString("Singapore", "Indonesia", exptected);
 	}
 	
 	@Test
 	public void testSearchResultRepesentation(){
-		setupFlightDatabase();
 		String exptected = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><root><airlines>Malaysian Airline</airlines></root>";
 		assertResultString("Singapore", "Malaysia", exptected);
 	}
@@ -68,6 +72,7 @@ public class FlightResourceTest {
 	private void setupFlightDatabase(){
 		FlightDatabase database = FlightDatabase.getInstance();
 		String flightDatTaCsvFilePath = ResourceHelpers.resourceFilePath("com/wego/flight/flight_data.csv");
-		database.loadDataFromCsvFile(flightDatTaCsvFilePath, FlightDatabase.CSV_LOAD_LOCAL_TYPE);
+		FileWrapper file = new FileWrapper(flightDatTaCsvFilePath, FileWrapper.LOCAL);
+		database.loadDataFromCsvFile(file);
 	}
 }
