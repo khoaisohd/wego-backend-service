@@ -72,7 +72,7 @@
               <transformers>
                 <transformer />
                 <transformer>
-                  <mainClass>com.wego.airline.WegoApp</mainClass>
+                  <mainClass>com.wego.flight.WegoApp</mainClass>
                 </transformer>
               </transformers>
             </configuration>
