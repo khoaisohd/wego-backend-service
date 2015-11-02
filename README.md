@@ -1,4 +1,4 @@
-# Introduction - Change
+# Introduction
 
 This Restful Web Application is created by using Dropwizard Framework to handle request of flight searching.
 
